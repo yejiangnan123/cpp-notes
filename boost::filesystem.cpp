@@ -1,3 +1,8 @@
+文件系统常用函数
+boost::filesystem;
+std::fstream
+
+
 namespace fc=boost::filesystem;//简单别名
 #define LOG_READ  (std::ios::in | std::ios::binary)
 #define LOG_WRITE (std::ios::out | std::ios::binary | std::ios::app)
