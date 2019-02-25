@@ -1,4 +1,9 @@
-//管理区块日志
+//管理区块日志  
+// std::fstream  block_file.generic_string().c_str()
+
+
+#define LOG_READ  (std::ios::in | std::ios::binary)
+#define LOG_WRITE (std::ios::out | std::ios::binary | std::ios::app)
 namespace detail {
       class block_log_impl {
          public:
