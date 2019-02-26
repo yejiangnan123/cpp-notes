@@ -42,9 +42,27 @@ condition_variable要求传入的lock是boost::unique_lock<boost::mutex>
 condition_variable因此会有针对boost::unique_lock<boost::mutex>的优化
 ---------------------
 共享内存
+https://www.jianshu.com/p/56efa9d1500a
+boost::interprocess::shared_memory_object：普通共享内存对象   共享字节数据
+boost::interprocess::mamaged_shared_memory：自动托管的共享内存对象，共享对象数据
+boost::interprocess::mapped_region：映射共享内存到当前进程地址空间的对象
+boost::interprocess::allocator：共享内存分配器
+boost::interprocess::named_mutex：命名互斥对象，存储在操作系统
+boost::interprocess::interprocess_mutex：匿名互拆对象，存储在共享内存
+boost::interprocess::named_condition：命名条件变量
+boost::interprocess::interprocess_condition：匿名条件变量
+boost::interprocess::named_semaphore：命名信号量
+boost::interprocess::interprocess_semaphore：匿名信号量
+boost::interprocess::file_lock：文件锁
 ---------------------
 信号量
-文件锁
-读写锁
-智能锁
+主要特点是计数
+boost::interprocess::interprocess_semaphore m_semaphore(0);  初始化
+post()一次,信号量加1 
+wait(),try_wait() ,timed_wait(const boost::posix_time::ptime&abs_time). 信号量减1  
+---------------------
 消息队列
+boost::interprocess::message_queue   消息队列，有名字
+https://www.cnblogs.com/ltm5180/p/4334522.html
+只是内存拷贝，数据必须序列化，不能直接发送对象
+---------------------
