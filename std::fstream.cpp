@@ -46,6 +46,8 @@ flush（）  同步缓存
 文件位置
 seekg()  是设置读位置
 seekp()  是设置写位置。
+tellg（） 读位置
+tellp（） 写位置
 ios::beg：　　文件开头
 ios::cur：　　文件当前位置
 ios::end：　　文件结尾
