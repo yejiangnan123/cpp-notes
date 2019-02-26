@@ -41,6 +41,7 @@ ifstream &get(char *buf,int num,char delim='\n')；读
 read(unsigned char *buf,int num);  读
 write(const unsigned char *buf,int num);  写
 int eof(); 文件到达末尾
+flush（）  同步缓存
 
 文件位置
 seekg()  是设置读位置
