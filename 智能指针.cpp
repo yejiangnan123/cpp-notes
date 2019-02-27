@@ -1,6 +1,6 @@
 智能指针
-shared_ptr、scoped_ptr、intrusive_ptr、weak_ptr、shared_array、scoped_array
-
+shared_ptr、scoped_ptr或者unique_ptr、intrusive_ptr、weak_ptr、shared_array、scoped_array
+共享指针，   独占指针，                 侵入式指针，     弱指针   ，共享数组，    ，独占数组
 https://blog.csdn.net/dongguan131/article/details/6683843 
 ------------------------
 boost作用域指针    https://blog.csdn.net/peterpan_hai/article/details/51704588    独占
