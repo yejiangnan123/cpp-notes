@@ -24,3 +24,5 @@ boost-tcp-udp
 boost-http
 
 jsonrpc
+
+log 日志库
