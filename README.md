@@ -19,4 +19,6 @@ boost字符串  string.cpp
 
 json库
 
-boos-tcp-udp
+boost-tcp-udp
+
+boost-http
