@@ -22,3 +22,5 @@ json库
 boost-tcp-udp
 
 boost-http
+
+jsonrpc
