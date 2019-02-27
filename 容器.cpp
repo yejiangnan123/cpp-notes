@@ -14,3 +14,19 @@ begin end cbegin cend empty size max_size emplace emplace_hint insert erase clea
 load_factor max_load_factor rehash reverse
 迭代器 添加 插入 删除 清空 查找
 ---------------------------------
+list  双向链表   插入删除很快
+forward_list 单向链表  只能++，不能--
+array  定长数组
+deque  双端队列  
+queue  普通队列
+priority_queue 优先队列
+stack 栈，后进先出
+map  key-value  按照key排序
+multimap  key可以重复
+unordered_map  无序map
+unordered_multimap  无序，重复
+set  集合，排序，唯一
+multi-set 集合，排序，重复
+unordered_set  无序
+unordered_multiset 无序，重复
+vector 动态数组
