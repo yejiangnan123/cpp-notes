@@ -35,3 +35,5 @@ log 日志库
 数据库
 
 安装boost
+
+boost-cmake配置
