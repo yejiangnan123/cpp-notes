@@ -1,0 +1,25 @@
+查看boost安装版本：
+$ dpkg -S /usr/include/boost/version.hpp
+
+卸载boost:
+$ sudo apt-get autoremove package
+(注：package为要卸载的boost的名称 示例：sudo apt-get autoremove libboost1.55-dev)
+
+更新boost:
+$ sudo add-apt-repository ppa:boost-latest/ppa
+$ sudo apt-get update
+
+查看可安装的boost:
+$ aptitude search boost
+
+安装boost(以安装boost1.55示例):
+$ sudo apt-get install libboost1.55-dev
+
+官网下载
+https://www.boost.org/users/history/version_1_69_0.html
+
+解压安装
+sudo tar zxvf boost_1_69_0.tar.gz
+./bootstrap.sh
+sudo ./b2
+sudo ./b2 install
