@@ -1,4 +1,5 @@
 字符串
+https://www.boost.org/doc/libs/1_61_0/doc/html/string_algo.html
 https://blog.csdn.net/wangqiulin123456/article/details/79886994
 
 -------------------------
@@ -64,3 +65,83 @@ find_iterator()  迭代分割
 split_iterator()  迭代分割
 join()  合并
 -------------------------
+实例cat main.cpp 
+#include <iostream>
+#include <boost/algorithm/string.hpp>
+#include <vector>
+using namespace std;
+//using namespace boost;
+int main()
+{
+    //-------------------------
+    //大小写转换
+    std::cout << "大小写转换\n";
+    std::string str("The C++ Boost Libraries");
+    std::cout << boost::to_upper_copy(str) << "\n";
+    boost::to_lower(str);
+    std::cout << str << "\n";
+    //------------------------
+    //比较2个字符串
+    std::cout << "比较2个字符串\n";
+    std::cout << boost::starts_with("abc","ab") << "\n";
+    //------------------------
+    //字符串分类
+    std::cout << "字符串分类\n";
+    std::cout << boost::all(" ",boost::is_space()) << "\n";
+    //------------------------
+    //修剪  去掉首尾空格
+    std::cout << "修剪\n";
+    std::string str3("  abc de f  ");
+    boost::trim_left(str3);
+    std::cout << str3 << "end\n";
+    boost::trim_right(str3);
+    std::cout << str3 << "end\n";
+    boost::trim(str3);
+    std::cout << str3 << "end\n"; 
+    //------------------------
+    //查找
+    std::cout << "查找\n";
+    char text[]="hello dolly!";
+    boost::iterator_range<char*> result=boost::find_last(text,"ll");
+    std::cout << result << "\n";
+    if(boost::find_first(text, "dolly"))
+    {
+        std::cout << "Dolly is there" << "\n";
+    }
+    //------------------------
+    //替换和删除
+    std::cout << "替换和删除\n";
+    std::string str5="Hello  Dolly,   Hello Dolly!";
+    boost::replace_first(str5, "Dolly", "Jane");      // str1 == "Hello  Jane,   Hello Dolly!"
+    std::cout << str5 << "\n";
+    boost::replace_last(str5, "Hello", "Goodbye");    // str1 == "Hello  Jane,   Goodbye World!"
+    std::cout << str5 << "\n";
+    boost::erase_all(str5, " ");                      // str1 == "HelloJane,GoodbyeWorld!"
+    std::cout << str5 << "\n";
+    boost::erase_head(str5, 6);                       // str1 == "Jane,GoodbyeWorld!"
+    std::cout << str5 << "\n";
+    //-----------------------
+    //切割与合并
+    std::cout << "切割与合并\n";
+    std::string str1("hello abc-*-ABC-*-aBc goodbye");
+    typedef vector< boost::iterator_range<std::string::iterator> > find_vector_type;
+    find_vector_type FindVec; // #1: Search for separators
+    boost::ifind_all( FindVec, str1, "abc" ); // FindVec == { [abc],[ABC],[aBc] }
+    for(find_vector_type::iterator iter=FindVec.begin();iter!=FindVec.end();iter++)
+    {
+        std::cout << *iter;
+    }
+    std::cout << "\n";
+    typedef vector< std::string > split_vector_type;
+    split_vector_type SplitVec; // #2: Search for tokens
+    boost::split( SplitVec, str1, boost::is_any_of("-*"), boost::token_compress_on ); // SplitVec == { "hello abc","ABC","aBc goodbye" }
+    for(split_vector_type::iterator iter=SplitVec.begin();iter!=SplitVec.end();iter++)
+    {
+        std::cout << *iter;
+    }
+    std::cout << "\n";
+    //----------------------
+    
+    return 0;
+}
+
