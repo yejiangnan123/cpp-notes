@@ -144,4 +144,14 @@ int main()
     
     return 0;
 }
-
+------------------------------
+cat CMakeLists.txt 
+cmake_minimum_required(VERSION 2.8.3)
+add_compile_options(-std=c++11)
+project(test)
+find_package(Boost REQUIRED COMPONENTS system thread)
+include_directories(${Boost_INCLUDE_DIRS})
+AUX_SOURCE_DIRECTORY(. SRC_DIR)
+add_executable(test ${SRC_DIR} )
+target_link_libraries(test ${Boost_LIBRARIES} pthread)
+---------------------------------
