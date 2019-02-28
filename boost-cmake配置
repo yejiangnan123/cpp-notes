@@ -1,0 +1,10 @@
+通用配置  为boost配置cmake
+cat CMakeLists.txt 
+
+cmake_minimum_required(VERSION 2.8.3)
+project(test)
+find_package(Boost REQUIRED COMPONENTS system thread)
+include_directories(${Boost_INCLUDE_DIRS})
+AUX_SOURCE_DIRECTORY(. SRC_DIR)
+add_executable(test ${SRC_DIR} )
+target_link_libraries(test ${Boost_LIBRARIES} pthread)
