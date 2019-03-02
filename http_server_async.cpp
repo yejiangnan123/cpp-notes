@@ -6,7 +6,6 @@
 // Example: HTTP server, asynchronous
 //
 //------------------------------------------------------------------------------
-
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
@@ -89,6 +88,14 @@ path_cat(
     return result;
 }
 
+// api fun
+std::string handle_rpc(std::string reqBody)
+{
+    std::string resBody;
+    resBody = "handle_rpc " + reqBody;
+    return resBody;
+}
+
 // This function produces an HTTP response for the given
 // request. The type of the response object depends on the
 // contents of the request, so the interface requires the
@@ -103,7 +110,28 @@ handle_request(
     Send&& send)
 {
     //std::cout << "body()= \n" << req.body() << "\n";
-        
+
+    //jsonrpc handle request
+    //Respond to post request
+    if(req.method() == http::verb::post &&
+       req.target().find("/111.json") != boost::beast::string_view::npos)
+    {
+        auto const jsonrpc_res =
+        [&req](boost::beast::string_view jsonrpc)
+        {
+            boost::beast::string_view jsondata = req.body();
+            std::string temp = handle_rpc(jsondata.to_string());
+            http::response<http::string_body> res{http::status::ok, req.version()};
+            res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+            res.set(http::field::content_type, "application/json");
+            res.keep_alive(req.keep_alive());
+            res.body() = temp;
+          //  res.prepare_payload();
+            return res;
+        };
+        return send(jsonrpc_res(""));
+    }  
+  
     // Returns a bad request response
     auto const bad_request =
     [&req](boost::beast::string_view why)
@@ -145,6 +173,7 @@ handle_request(
 
     // Make sure we can handle the method
     if( req.method() != http::verb::get &&
+        req.method() != http::verb::post &&
         req.method() != http::verb::head)
         return send(bad_request("Unknown HTTP-method"));
 
@@ -153,7 +182,7 @@ handle_request(
         req.target()[0] != '/' ||
         req.target().find("..") != boost::beast::string_view::npos)
         return send(bad_request("Illegal request-target"));
-
+    
     // Build the path to the requested file
     std::string path = path_cat(doc_root, req.target());
     if(req.target().back() == '/')
@@ -202,13 +231,13 @@ handle_request(
 
 // Report a failure
 void
-fail(boost::system::error_code ec, char const* what)   
+fail(boost::system::error_code ec, char const* what)
 {
     std::cerr << what << ": " << ec.message() << "\n";
 }
 
 // Handles an HTTP server connection
-class session : public std::enable_shared_from_this<session>   
+class session : public std::enable_shared_from_this<session>
 {
     // This is the C++11 equivalent of a generic lambda.
     // The function object is used to send an HTTP message.
