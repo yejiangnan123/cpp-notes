@@ -1,7 +1,6 @@
 // https://www.boost.org/doc/libs/1_69_0/libs/beast/example/http/server/async/http_server_async.cpp
-// 匿名函数怎么定义
-// boost::beast::string_view   这是一种字符串
-// boost::beast::iequals;   字符串比较
+// 匿名函数定义，&&右值引用
+// 这是一个http异步服务器，支持多线程处理http请求
 //------------------------------------------------------------------------------
 //
 // Example: HTTP server, asynchronous
@@ -29,17 +28,17 @@ namespace http = boost::beast::http;    // from <boost/beast/http.hpp>
 
 // Return a reasonable mime type based on the extension of a file.
 boost::beast::string_view
-mime_type(boost::beast::string_view path)   //路径扩展名判断
+mime_type(boost::beast::string_view path)
 {
     using boost::beast::iequals;
-    auto const ext = [&path]   // 匿名函数定义，path是参数
+    auto const ext = [&path]
     {
         auto const pos = path.rfind(".");
         if(pos == boost::beast::string_view::npos)
             return boost::beast::string_view{};
         return path.substr(pos);
     }();
-    if(iequals(ext, ".htm"))  return "text/html"; //字符串比较
+    if(iequals(ext, ".htm"))  return "text/html";
     if(iequals(ext, ".html")) return "text/html";
     if(iequals(ext, ".php"))  return "text/html";
     if(iequals(ext, ".css"))  return "text/css";
@@ -68,7 +67,7 @@ mime_type(boost::beast::string_view path)   //路径扩展名判断
 std::string
 path_cat(
     boost::beast::string_view base,
-    boost::beast::string_view path)    //连接本地地址和文件地址
+    boost::beast::string_view path)
 {
     if(base.empty())
         return path.to_string();
@@ -82,10 +81,10 @@ path_cat(
         if(c == '/')
             c = path_separator;
 #else
-    char constexpr path_separator = '/';  //定义一个字符
-    if(result.back() == path_separator)   //查看是否是'/'结尾
+    char constexpr path_separator = '/';
+    if(result.back() == path_separator)
         result.resize(result.size() - 1);
-    result.append(path.data(), path.size());   //添加字符串
+    result.append(path.data(), path.size());
 #endif
     return result;
 }
@@ -101,11 +100,13 @@ void
 handle_request(
     boost::beast::string_view doc_root,
     http::request<Body, http::basic_fields<Allocator>>&& req,
-    Send&& send)   //处理请求   http::request  http::basic_fields
+    Send&& send)
 {
+    //std::cout << "body()= \n" << req.body() << "\n";
+        
     // Returns a bad request response
     auto const bad_request =
-    [&req](boost::beast::string_view why)  // http::response  http::string_body  http::status::bad_request
+    [&req](boost::beast::string_view why)
     {
         http::response<http::string_body> res{http::status::bad_request, req.version()};
         res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
@@ -201,13 +202,13 @@ handle_request(
 
 // Report a failure
 void
-fail(boost::system::error_code ec, char const* what)   //报告错误
+fail(boost::system::error_code ec, char const* what)   
 {
     std::cerr << what << ": " << ec.message() << "\n";
 }
 
 // Handles an HTTP server connection
-class session : public std::enable_shared_from_this<session>   //服务器连接
+class session : public std::enable_shared_from_this<session>   
 {
     // This is the C++11 equivalent of a generic lambda.
     // The function object is used to send an HTTP message.
