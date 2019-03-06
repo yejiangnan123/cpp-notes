@@ -43,9 +43,9 @@ Capacity: 容量
 size
 length
 max_size
-resize
+resize   重新设置大小
 capacity
-reserve
+reserve  重新设置空间
 clear
 empty
 shrink_to_fit 缩减字符串空间，把没用的空间释放掉
@@ -73,13 +73,13 @@ data
 get_allocator
 copy
 find
-rfind
-find_first_of
-find_last_of
-find_first_not_of
-find_last_not_of
+rfind               反向查找
+find_first_of       查找任意一个
+find_last_of        查找最后一个
+find_first_not_of   第一个不匹配
+find_last_not_of    最后一个不匹配
 substr
-compare
+compare             比较
 
 Member constants：成员常数
 npos
