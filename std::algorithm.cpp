@@ -85,18 +85,18 @@ set_difference    合并2个已经排序的容器，去掉交集元素
 set_symmetric_difference
 -----------------------------------------------
 Heap:  堆
-push_heap
-pop_heap
-make_heap
-sort_heap
-is_heap 
+push_heap   堆中添加
+pop_heap    从堆中删除
+make_heap   创建一个堆
+sort_heap   堆排序
+is_heap     判断是否为堆
 is_heap_until 
 -----------------------------------------------
 Min/max:   最小最大值
-min
-max
-minmax 
-min_element
-max_element
-minmax_element 
+min        最小值
+max        最大值
+minmax     最小最大值
+min_element  最小元素
+max_element  最大元素
+minmax_element  最小最大元素
 -----------------------------------------------
