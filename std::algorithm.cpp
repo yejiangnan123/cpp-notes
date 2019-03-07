@@ -33,55 +33,55 @@ swap_ranges    交换一段范围的元素
 iter_swap      通过迭代器交换元素
 transform      一个范围元素作为函数输入，输出到另一个范围
 replace        范围替换
-replace_if
-replace_copy
-replace_copy_if
-fill
-fill_n
-generate
-generate_n
-remove
-remove_if
-remove_copy
-remove_copy_if
-unique
-unique_copy
-reverse
-reverse_copy
-rotate
-rotate_copy
-random_shuffle
-shuffle 
+replace_if     把范围内，满足条件的元素替换成新元素
+replace_copy   把容器复制到另一个容器，且替换旧元素为新元素
+replace_copy_if 把容器复制到另一个容器，且替换满足条件的元素
+fill            范围内填充元素
+fill_n          范围内填充n个元素
+generate        用函数返回值填充容器，每填充一个元素调用一次函数
+generate_n      用函数返回值填充容器，调用n次，填充n个元素
+remove          移除范围内某种元素，其他元素向前移动，重新排列
+remove_if       移除范围内满足条件的元素，其他元素向前移动，重新排列
+remove_copy     移除范围内元素，把结果拷贝到新容器
+remove_copy_if  移除范围内满足条件的元素，把结果拷贝到新容器，
+unique          去掉容器内连续重复的元素，连续的条件可以自定义
+unique_copy     去掉容器内连续重复的元素，把结果拷贝到新容器
+reverse         反序，把容器内元素倒过来
+reverse_copy    反序，把容器内元素倒过来，结果拷贝到新容器
+rotate          将范围内前一段元素移到后一段
+rotate_copy     将容器内前一段元素移动到后一段，结果保存到新容器
+random_shuffle  随机排序
+shuffle        指定生成器，随机排序
 --------------------------------------------
 Partitions:   分区
-is_partitioned 
-partition
-stable_partition
-partition_copy 
-partition_point 
+is_partitioned  判断容器内的元素是否分区，条件自定义，例如奇数是否都在偶数前面
+partition       对容器内元素进行分区，例如把奇数放到偶数前面
+stable_partition  对容器进行分区，例如把奇数放在前面，稳定分区，保留元素相对位置
+partition_copy    对容器进行分区，把结果保存到2个新的容器
+partition_point   返回已经分区后半段的起始迭代器，例如奇数在前偶数在后，返回第一个偶数的迭代器位置
 --------------------------------------------
 Sorting:       排序
-sort
-stable_sort
-partial_sort
-partial_sort_copy
-is_sorted 
-is_sorted_until 
-nth_element
+sort           升序排序
+stable_sort    升序排序，升序条件可以自己定义
+partial_sort   把小数放在前半段，并按升序排序，后半段不排序
+partial_sort_copy 把排序结果拷贝到新容器
+is_sorted       判断容器是否已经按升序排序
+is_sorted_until 返回第一个不遵循升序元素的迭代器
+nth_element     重新排序，第n个位置的元素排在第n位，也就是说，左边的元素都小于它，右边的元素都大于它
 --------------------------------------------
 Binary search：  二进制搜索
-lower_bound
-upper_bound
-equal_range
-binary_search
+lower_bound      返回第一个大于等于指定值的元素位置
+upper_bound      返回第一个大于指定值的元素位置
+equal_range      返回2个迭代器，第一个大于等于该值的元素位置，第一个大于该值的元素位置
+binary_search    搜索值，如果找到等效值返回true
 --------------------------------------------
-Merge   合并
-merge
-inplace_merge
-includes
-set_union
-set_intersection
-set_difference
+Merge       合并
+merge       合并2个排序的容器，保存到新容器，新容器也排序
+inplace_merge      就地合并，一个容器，前面一段和后面一段都已经排序过了，合并也是排序的
+includes      2个容器都是排序过的，如果容器1包含容器2的所有元素，则返回true
+set_union     合并2个已经排序的容器，去重复
+set_intersection  合并2个已经排序的容器，求交集，可以重复
+set_difference    合并2个已经排序的容器，去掉交集元素
 set_symmetric_difference
 -----------------------------------------------
 Heap:  堆
