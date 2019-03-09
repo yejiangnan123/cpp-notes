@@ -19,3 +19,6 @@ unordered_multiset  无序 可重复
 unordered_map    无序
 unordered_multimap  无序，可重复
 -----------------------------------------------------
+initializer_list 这是一个模板函数，定义一个列表，作为参数函数参数非常高效，因为它是不可修改的容器，相当于常数列表，不需要拷贝，数据传值类似指针和引用
+http://www.cplusplus.com/reference/initializer_list/
+-----------------------------------------------------
