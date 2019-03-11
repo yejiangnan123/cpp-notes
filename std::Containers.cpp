@@ -12,7 +12,7 @@ queue   队列，先进先出；
 priority_queue   优先级队列，自定义结构需要重载 < 操作符；例如先出队大值
 set    key集合，有序，key唯一；不能修改元素的值，只能增加删除元素。
 multiset   和set的区别是key可以相同。
-map   存储键值对，查找效率极高，原理是平滑二叉树
+map   存储键值对，查找效率极高，原理是平衡二叉树
 multimap  键值可以重复
 unordered_set 基于哈希表，无序，所以速度极快
 unordered_multiset  无序 可重复
