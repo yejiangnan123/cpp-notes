@@ -74,7 +74,7 @@ get_allocator
 copy
 find
 rfind               反向查找
-find_first_of       查找任意一个
+find_first_of       查找第一个
 find_last_of        查找最后一个
 find_first_not_of   第一个不匹配
 find_last_not_of    最后一个不匹配
