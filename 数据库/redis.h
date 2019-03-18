@@ -29,6 +29,13 @@ class redis{
       }
       return true;
     }
+    redis(){
+      _connect = NULL;
+    }
+    ~redis(){
+       if(NULL!=_connect)
+         redisFree(_colnnect);
+     }
     // print reply
     void printReply(redisReply *p) {
       if(NULL==p) { return; }
@@ -89,6 +96,6 @@ class redis{
       return;
     }
   private:
-    redisContext* _connect;
+    redisContext* _connect = NULL;
 };
 #endif
