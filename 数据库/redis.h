@@ -34,7 +34,7 @@ class redis{
     }
     ~redis(){
        if(NULL!=_connect)
-         redisFree(_colnnect);
+         redisFree(_connect);
      }
     // print reply
     void printReply(redisReply *p) {
