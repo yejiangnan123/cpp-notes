@@ -1,4 +1,3 @@
-root@ubuntu:~/c++-test/redis# cat redis.h 
 #ifndef REDIS_H
 #define REDIS_H
 #include <string>
@@ -10,6 +9,7 @@ root@ubuntu:~/c++-test/redis# cat redis.h
 using namespace std;
 class redis{
   public:
+    //  hander reply ptr
     class replyClass{
       public:
       replyClass() { reply = NULL; }
@@ -19,6 +19,7 @@ class redis{
       }
       private:
     };
+    // shared ptr
     typedef shared_ptr<replyClass> replyPtr;
     bool connect(string host="127.0.0.1",int port=6379) {
       _connect = redisConnect(host.c_str(), port);
@@ -28,6 +29,7 @@ class redis{
       }
       return true;
     }
+    // print reply
     void printReply(redisReply *p) {
       if(NULL==p) { return; }
       switch(p->type) {
@@ -62,6 +64,7 @@ class redis{
       print(p);
       return;
     }
+    // get key
     void get(string key) {
       string cmd = "get " + key;
       replyPtr p(new replyClass());
@@ -69,6 +72,7 @@ class redis{
       print(p);
       return;
     }
+    // strlen key
     void strlen(string key) {
       string cmd = "strlen " + key;
       replyPtr p(new replyClass());
@@ -76,6 +80,7 @@ class redis{
       print(p);
       return;
     }
+    // mget key1 key2 ...
     void mget(string key1,string key2) {
       string cmd = "mget " + key1 + " " + key2;
       replyPtr p(new replyClass());
