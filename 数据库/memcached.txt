@@ -1,0 +1,28 @@
+------------------------------------------------------
+http://www.runoob.com/Memcached/Memcached-tutorial.html
+-------------------------------------------------------
+Memcached是一个自由开源的，高性能，分布式内存对象缓存系统
+-------------------------------------------------------
+连接   telnet 127.0.0.1 11211
+设置    set runoob 0 900 9
+        memcached
+添加    add new_key 0 900 10
+        data_value
+替换    replace mykey 0 900 16
+        some_other_value
+查询    get mykey
+追加    append runoob 0 900 5
+        redis
+在前面追加  prepend runoob 0 900 5
+             redis
+检查并设置  
+gets tp  获取唯一令牌 也就是下面的1
+cas tp 0 900 5 1
+redis
+获取唯一令牌   gets key1 key2 key3
+删除key   delete runoob
+加      incr visitors 5
+减      decr visitors 5
+状态    stats
+清理    flush_all
+--------------------------------------------------------
