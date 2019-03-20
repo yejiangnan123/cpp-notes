@@ -1,0 +1,32 @@
+连接数据库   mysql -u root -p
+退出   exit;
+创建数据库   create xxx;
+删除数据库   drop database xxx;
+选择数据库   use xxx;
+数据类型     整型，浮点数，字符，时间，字符串
+创建数据表   create table xxx(...);
+删除数据表   drop table xxx;
+插入数据     insert into xxx(...) values(...)
+查询数据     select * from xxx;
+条件语句     where xxx and/or xxx ...
+更新数据     update xxx set xxx=xxx,xxx=xxx
+删除数据     delete from xxx where xxx
+匹配某个字符串  like 如：SELECT * from runoob_tbl  WHERE runoob_author LIKE '%COM';
+连接2个select语句   union
+排序    SELECT * from runoob_tbl ORDER BY submission_date ASC;
+分组    根据某个字段分组 SELECT name, COUNT(*) FROM   employee_tbl GROUP BY name;
+多个数据表中读取数据   连接（inner join，left join，right join）
+NULL值特殊处理   IS NULL,IS NOT NULL,<=>
+正则表达式(REGEXP)  ^ $ . [...] [^...] p1|p2|p3 * + {n} {n,m}
+事物     begin commit rollback
+修改数据表名或者字段   alter
+索引   提高检索速度，index 普通索引 唯一索引 组合索引
+临时表   临时存在的表
+复制表   
+元数据   服务器版本，数据库名，用户名，服务器状态，服务器配置变量
+序列   AUTO_INCREMENT，某些字段能自动增长
+处理重复数据 列出，统计，过滤，删除重复数据
+导出数据   INTO OUTFILE
+导入数据  source， LOAD DATA LOCAL INFILE
+函数       字符串，数字，时间，高级
+运算符     算术，比较，逻辑，位运算
