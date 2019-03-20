@@ -1,0 +1,31 @@
+-------------------------------------------------------------------------
+http://www.runoob.com/sqlite/sqlite-create-table.html
+sqlite3
+.help
+-- 这是一个简单的注释
+创建数据库   sqlite3 testDB.db
+查看数据库   .databases
+退出         .quit
+导出数据库   sqlite3 testDB.db .dump > testDB.sql
+导入数据库   sqlite3 testDB.db < testDB.sql
+附加数据库   ATTACH DATABASE 'testDB.db' as 'TEST';
+分离数据库   DETACH DATABASE 'currentDB';
+创建表       CREATE TABLE COMPANY(...);
+查看表          .tables
+获取表完整信息  .schema COMPANY
+删除表      DROP TABLE COMPANY;
+插入一行数据    INSERT INTO COMPANY (...) VALUES (...);
+查看表数据   SELECT * FROM table_name;
+设置列宽     .width 10, 20, 10
+条件        SELECT * FROM COMPANY WHERE AGE >= 25 AND SALARY >= 65000;
+and/or运算符    SELECT * FROM COMPANY WHERE AGE >= 25 AND SALARY >= 65000;
+更新         UPDATE COMPANY SET ADDRESS = 'Texas' WHERE ID = 6;
+删除     DELETE FROM COMPANY WHERE ID = 7;
+模式匹配like  SELECT column_list FROM table_name WHERE column LIKE '%XXXX%'
+模式匹配GLOB（大小写敏感） SELECT FROM table_name WHERE column GLOB 'XXXX*'
+限制读取多少行   SELECT * FROM COMPANY LIMIT 3 OFFSET 2;
+排序   升序SELECT * FROM COMPANY ORDER BY SALARY ASC;
+分组    SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME;
+过滤    SELECT * FROM COMPANY GROUP BY name HAVING count(name) > 2;
+消除重复   SELECT DISTINCT name FROM COMPANY;
+---------------------------------------------------------------------------
