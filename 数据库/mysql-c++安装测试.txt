@@ -1,0 +1,186 @@
+https://blog.csdn.net/liushall/article/details/81144963
+-------------------------------------------------------
+对象
+MYSQL mysql;  //mysql标记对应某个数据库
+MYSQL_ROW row;  //row[i]可用于输出该行第i个字段的数据
+MYSQL_FIELD *field;  //field->name存储对应字段名称
+MYSQL_RES *result;
+------------------------------------------------------
+初始化
+MYSQL *mysql_init( MYSQL *mysql );
+MYSQL mysql;
+mysql_init( &mysql );
+------------------------------------------------------
+连接
+MYSQL *mysql_real_connect ( 
+	MYSQL *mysql, //初始化的MYSQL对象,与mysql_init()对应 
+	const char *host, //主机地址 const char *user, //用户，例如：
+	root const char *passwd, //数据库的密码 const char *db, //要连接的数据库，例如：
+	student unsigned int port, //端口，可填0 
+	const char *unix_socket, //一般为NULL 
+	unsigned long client_flag); //一般为0 
+//example mysql_real_connect( &mysql, "localhost", "root", "mypasswd", "student", 0, NULL, 0 );
+------------------------------------------------------
+执行命令
+mysql_query( MYSQL *mysql, char * command );
+//example
+string command = "select * from info";
+mysql_query( &mysql, command.c_str() );
+-------------------------------------------------------
+检索结果
+MYSQL_RES *mysql_store_result(MYSQL *mysql);
+//example
+MYSQL_RES *result;
+result = mysql_store_result( &mysql );
+--------------------------------------------------------
+获取结果集的行数
+mysql_num_rows( MYSQL_RES *result );
+--------------------------------------------------------
+获取结果集的字段数
+mysql_num_fields( MYSQL_RES *result );
+//example
+int row_num;
+row_num = mysql_num_fields( result );
+--------------------------------------------------------
+获取下一个字段的类型
+MYSQL_FIELD* mysql_fetch_field(MYSQL_RES *result);
+--------------------------------------------------------
+从结果集中获取下一行，结束返回NULL。
+MYSQL_ROW mysql_fetch_row(MYSQL_RES *result); //example MYSQL_ROW row; 
+while( row = mysql_fetch_row( result ), row != NULL ) { 
+	for( int i = 0; i < num; i++ ) { 
+		cout << row[i] << "\t\t"; } 
+	cout << endl; 
+}
+--------------------------------------------------------
+给定字段序号，返回字段类型，结束返回NULL。
+MYSQL_FIELD* mysql_fetch_field_direct(MYSQL_RES *result, int i); //example 
+int num = mysql_num_fields( result ); //返回字段个数 
+for( int i = 0; i < num; i++ ) { 
+	field = mysql_fetch_field_direct( result, i ); //返回字段类型 
+	cout << field->name << "\t\t"; //输出字段名 
+} 
+cout << endl;
+-----------------------------------------------------------
+关闭连接
+mysql_close( MYSQL *mysql );
+------------------------------------------------------------
+实例
+先安装mysql
+sudo apt install mysql-server mysql-client
+sudo apt-get install libmysqld-dev
+------------------
+查看数据库是否安装
+mysql_config --cflags --libs  
+-------------------
+编译参数
+g++ test.cpp `mysql_config --cflags --libs` -o test
+--------------------
+camke配置
+root@ubuntu:~/mysql-test/test1# cat CMakeLists.txt 
+cmake_minimum_required(VERSION 2.8.3)
+add_compile_options(-std=c++11)
+project(test)
+find_package(Boost REQUIRED COMPONENTS system thread)
+include_directories(${Boost_INCLUDE_DIRS})
+AUX_SOURCE_DIRECTORY(. SRC_DIR)
+add_executable(test ${SRC_DIR} )
+target_link_libraries(test ${Boost_LIBRARIES} pthread mysqlclient)
+---------------------  
+创建数据库
+create database student
+使用数据库
+use student
+创建数据表
+CREATE TABLE IF NOT EXISTS `info`(
+   `id` VARCHAR(100) NOT NULL,
+   `name` VARCHAR(100) NOT NULL,
+   `sex` VARCHAR(100) NOT NULL,
+   `birthday` VARCHAR(100) NOT NULL,
+   PRIMARY KEY ( `id` )
+)
+------------------------
+源码
+root@ubuntu:~/mysql-test/test1# cat main.cpp 
+
+#include <iostream> 
+#include <string> 
+#include <mysql/mysql.h> 
+using namespace std; 
+class MysqlDB 
+{ 
+private: 
+    MYSQL mysql; 
+    MYSQL_ROW row; 
+    MYSQL_RES *result; 
+    MYSQL_FIELD *field; 
+public: 
+    MysqlDB() 
+    { 
+        if( mysql_init( &mysql ) == NULL ) 
+        { 
+            cout << "init error, line: " << __LINE__ << endl; exit(-1); 
+        }
+    } 
+    ~MysqlDB() 
+    { 
+        mysql_close( &mysql ); 
+    } 
+    void connect( string host, string user, string passwd, string database ) 
+    { 
+        if( !mysql_real_connect( &mysql, host.c_str(), user.c_str(), passwd.c_str(), database.c_str(), 0, NULL, 0 ) ) 
+        { 
+            cout << "connect error, line: " << __LINE__ << endl; exit(-1); 
+        } 
+    } 
+    void add(); 
+    void print(); 
+}; 
+void MysqlDB::add() 
+{ 
+    string id, name, sex, birthday; 
+    do { 
+        cout << "请输入学生信息:\n"; 
+        cin >> id >> name >> sex >> birthday; 
+        string sql = "insert into info values('" + id + "', '" + name + "', '" + sex + "', '" + birthday + "');"; 
+        mysql_query( &mysql, sql.c_str() ); 
+        cout << "是否继续（y/n）: "; 
+        cin >> id; 
+    } while( id == "y" ); 
+} 
+void MysqlDB::print() 
+{ 
+     // string sql = "select * from info where name = '" + name + "';";  //要有'' 
+       string sql = "select * from info;"; 
+       mysql_query( &mysql, sql.c_str() ); 
+       result = mysql_store_result( &mysql ); 
+        if( !result ) 
+        { 
+            cout << "result error, line : " << __LINE__ << endl; return ; 
+        } 
+        int num; 
+        num = mysql_num_fields( result ); //返回字段个数 
+        for( int i = 0; i < num; i++ ) 
+        { 
+            field = mysql_fetch_field_direct( result, i ); //返回字段类型 
+            cout << field->name << "\t\t"; //输出字段名 
+        } 
+        cout << endl; 
+        while( row = mysql_fetch_row( result ), row ) 
+        { 
+            for( int i = 0; i < num; i++ ) 
+            { 
+                cout << row[i] << "\t\t"; 
+            } 
+            cout << endl; 
+        } 
+} 
+int main() 
+{ 
+    MysqlDB db; 
+    db.connect( "localhost", "root", "901117", "student" ); 
+    db.print(); 
+    db.add(); 
+    db.print(); 
+    return 0; 
+}
