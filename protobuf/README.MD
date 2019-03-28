@@ -1,7 +1,10 @@
 # protobuf
-【原文博客】(https://www.cnblogs.com/luoxn28/p/5303517.html)
+	[原文博客](https://www.cnblogs.com/luoxn28/p/5303517.html)
 # protobuf安装
-* 1、下载protobuf代码 google/protobuf
+* 1、下载protobuf代码 google/protobuf[源码](https://github.com/protocolbuffers/protobuf)
+```
+	git clone https://github.com/protocolbuffers/protobuf.git
+```
 * 2、安装protobuf
 ```
   tar -xvf protobuf
