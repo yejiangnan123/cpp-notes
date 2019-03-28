@@ -14,6 +14,7 @@
   make check
   make install
   至此安装完成^_^，下面是配置：
+  如果不想生成动态protobuf库，则用命令./configure --disable-shared。
 ```
 * (1) vim /etc/profile，添加
 ```
@@ -35,20 +36,21 @@
 root@ubuntu:~/protobuf-test/example1# cat addressbook.proto 
 
 syntax = "proto3";   // 这一行前面必须空一行
-package tutorial; message Person {
-   string name = 1; //required
-   int32 id = 2;
-   string email= 3;  //optional 默认
-    enum PhoneType {
-        MOBILE = 0;
-        HOME = 1;
-        WORK = 2;
-   }
-   message PhoneNumber {
-         string number = 1;
-        PhoneType type = 2;  
-   }
-   PhoneNumber phone= 4;
+package tutorial;   //包名
+message Person {
+  string name = 1; //
+  int32 id = 2;
+  string email= 3;  //optional 默认
+  enum PhoneType {   //枚举
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+  message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2;  
+  }
+  PhoneNumber phone= 4;
 } 
 ```
 ```
@@ -58,7 +60,7 @@ root@ubuntu:~/protobuf-test/example1# cat test1.cpp
 #include <assert.h>
 #include <iostream>  //iostream
 using namespace std;
-using namespace tutorial;
+using namespace tutorial;//导入包名，类似命名空间
 int main() {
 	char buf[1024];
 	int buf_len = 0;
@@ -76,3 +78,7 @@ int main() {
 	return 0;
 }
 ```
+# 语法
+* 数据类型
+* 默认值
+* 枚举
