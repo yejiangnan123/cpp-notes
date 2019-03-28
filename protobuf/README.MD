@@ -3,7 +3,7 @@
 # protobuf安装
 * 1、下载protobuf代码 google/protobuf[源码](https://github.com/protocolbuffers/protobuf)
 ```
-	git clone https://github.com/protocolbuffers/protobuf.git
+  git clone https://github.com/protocolbuffers/protobuf.git
 ```
 * 2、安装protobuf
 ```
@@ -17,18 +17,18 @@
 ```
 * (1) vim /etc/profile，添加
 ```
-	export PATH=$PATH:/usr/local/protobuf/bin/
-	export PKG_CONFIG_PATH=/usr/local/protobuf/lib/pkgconfig/
-	保存执行，source /etc/profile。同时在~/.profile中添加上面两行代码，否则会出现登录用户找不到protoc命令。
+  export PATH=$PATH:/usr/local/protobuf/bin/
+  export PKG_CONFIG_PATH=/usr/local/protobuf/lib/pkgconfig/
+  保存执行，source /etc/profile。同时在~/.profile中添加上面两行代码，否则会出现登录用户找不到protoc命令。
 ```
 * (2) 配置动态链接库
 ```
-	vim /etc/ld.so.conf，在文件中添加/usr/local/protobuf/lib（注意: 在新行处添加），然后执行命令: ldconfig
+  vim /etc/ld.so.conf，在文件中添加/usr/local/protobuf/lib（注意: 在新行处添加），然后执行命令: ldconfig
 ```
 * 编译
 ```
-	protoc --cpp_out=./ addressbook.proto
-	g++ addressbook.pb.cc test1.cpp -o write `pkg-config --cflags --libs protobuf`
+  protoc --cpp_out=./ addressbook.proto
+  g++ addressbook.pb.cc test1.cpp -o write `pkg-config --cflags --libs protobuf`
 ```
 # 举例
 ```
