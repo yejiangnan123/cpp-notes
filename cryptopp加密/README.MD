@@ -304,3 +304,46 @@ int main(int argc, char *argv[])
     return -3;
 }
 ```
+## SHA256
+```cpp
+#include <string>
+
+#include <cryptopp/files.h>
+#include <cryptopp/filters.h>
+#include <cryptopp/hex.h>
+#include <cryptopp/randpool.h>
+#include <cryptopp/rsa.h>
+
+#include <unistd.h>
+#include <iostream>
+#include <sstream>
+using namespace std;
+using namespace CryptoPP;
+string mysha256(string data)
+{
+    byte const* pbData = (byte*) data.data();
+    unsigned int nDataLen = data.size();
+    byte abDigest[CryptoPP::SHA256::DIGESTSIZE];
+
+    CryptoPP::SHA256().CalculateDigest(abDigest, pbData, nDataLen);
+    string ret((char*)abDigest);
+    ret.resize(32);
+    return ret;
+}
+std::string strToHex(std::string str, std::string separator = "")
+{
+    const std::string hex = "0123456789ABCDEF";
+    std::stringstream ss;
+    cout << str.size()<<"\n";
+    for (std::string::size_type i = 0; i < str.size(); ++i)
+        ss << hex[(unsigned char)str[i] >> 4] << hex[(unsigned char)str[i] & 0xf] << separator;
+    return ss.str();
+}
+int main()
+{
+    string sha256 = mysha256(string("123456789"));
+    string strhex = strToHex(sha256);
+    cout << strhex << "\n";
+    return 0;
+}
+```
