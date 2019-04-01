@@ -1,4 +1,10 @@
-
+# test.cpp
+```
+scoped_main   主函数
+GenerateRSAKey   创建密钥对
+RSASignFile  用私钥签名消息，输出签名
+RSAVerifyFile 用公钥验证消息签名
+```
 # 安装cryptopp-dev
 ## 方法1
 sudo apt-get install libcryptopp-dev
